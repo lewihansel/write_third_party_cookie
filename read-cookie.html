@@ -1,13 +1,21 @@
 <body>
+    <div id="content"></div>
     <script>
         (() => {
-            // only run when window is loaded inside an iframe
-            if (!window.parent) return;
-
-            var msg = /test_cookie=1/.test(document.cookie)
+            var supported = /test_cookie=1/.test(document.cookie)
+            var msg = supported
                 ? "Third party cookie supported!"
                 : "Third party cookie not supported!";
-            window.parent.postMessage(msg, "*"); // sending message to parent
+
+            // only run when window is loaded inside an iframe
+            if (window.parent) window.parent.postMessage(msg, "*"); // sending message to parent
+
+            var contentDiv = document.getElementById("content");
+            var paragraph = document.createElement("p");
+            var textNode = document.createTextNode(supported ? "Cookie supported!" : "Cookie not supported!");
+
+            paragraph.appendChild(textNode);
+            contentDiv.appendChild(paragraph);
         })();
     </script>
 </body>
