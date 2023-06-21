@@ -1,0 +1,13 @@
+<body>
+    <script>
+        (() => {
+            // only run when window is loaded inside an iframe
+            if (!window.parent) return;
+
+            var msg = /test_cookie=1/.test(document.cookie)
+                ? "Third party cookie supported!"
+                : "Third party cookie not supported!";
+            window.parent.postMessage(msg, "*"); // sending message to parent
+        })();
+    </script>
+</body>
